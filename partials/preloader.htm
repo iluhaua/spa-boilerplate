@@ -1,0 +1,52 @@
+<div id="loader">
+    <!-- <div class="spinner-wrapper">
+        <div class="loader-anim">
+            <div class="conical"></div>
+        </div>
+    </div> -->
+    <div class="text-wrap">
+        <img width="100" height="100" src="images/preloader.gif" alt="SPA Boilerplate">
+    </div>
+</div>
+<!-- Preloader script -->
+<script>
+    
+    window.addEventListener("visibleloaded", function(event) {
+    //document.addEventListener("DOMContentLoaded", function(event) {
+        console.log('== Document loaded ==');
+        
+        var preloader = document.getElementById("loader");
+
+        var hidePreloader = function() {
+            
+            console.log('preloader animation ended');
+            
+            setTimeoutFunction("up", 200, function () {
+                console.log('hide preloader');
+                document.body.classList.add("loaded");
+                document.dispatchEvent(preloaderFinishedEvent);
+            });
+        };
+
+        setTimeoutFunction("finished",  0, hidePreloader);
+
+        console.log('add animation end handlers');
+
+        function setTimeoutFunction(className, duration, callback){
+            setTimeout(function(){
+                //for the sake of IE
+                // if(!duration){
+                //     duration = 1000;
+                // }
+                preloader.classList.add(className);
+                if (callback) {
+                    callback(); 
+                } 
+            }, duration);
+        }
+
+        window.addEventListener("beforeunload", function (event) {
+            document.body.classList.remove('loaded');
+        });
+    });
+</script>

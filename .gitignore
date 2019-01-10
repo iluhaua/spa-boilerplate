@@ -1,0 +1,17 @@
+node_modules/
+
+.sass-cache/
+
+.vscode/
+
+dist/
+
+materials/
+
+css/*.css.map
+
+css/*.css
+
+.idea/
+
+.DS_Store

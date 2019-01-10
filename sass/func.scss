@@ -1,0 +1,801 @@
+
+/* =========================
+   Functions
+   =========================*/
+
+$screenFooterHeight_desk: 80px;
+$screenFooterHeight_mob: 70px;
+
+$red: #c21819;
+$redDark: #a41617;
+$inputColor: #4a4a4a;
+$borderColor: #c3c3c3;
+
+$bgMain: #ffffff;
+$textCol: #4a4a4a;
+$col: #4a4a4a;
+$bgOpen: #dcdfe6;
+
+$header-height: 63px;
+// Cubic bezier animating functions
+$easing: cubic-bezier(0.11,0,0.45,1);
+$ease-in-out: cubic-bezier(.25,.1,.41,.69);
+$faster-easing: cubic-bezier(.37,-0.07,.23,.84);
+
+// Media Query
+$mobile-width-m  : 320px;
+$mobile-width    : 767px;
+$tablet-width    : 1024px;
+$laptop-width    : 1280px;
+$mid-width       : 1650px;
+$desk-wide-width : 2560px;
+$ultra-hd-width  : 3840px;
+
+// Mixins
+@mixin mobile {
+    @media screen and (max-width: #{$mobile-width}), 
+           screen and (max-width: 825px) and (orientation: landscape) {
+   		@content;
+  	}
+}
+
+@mixin mobile-min {
+    @media (max-width: #{$mobile-width-m}) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (max-width: #{$tablet-width}) {
+        @content;
+    }
+}
+
+@mixin tablet-only {
+    @media screen and (min-width: 800px) and (max-width: 1024px) and (orientation: landscape),
+           screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+        @content;
+    }
+}
+
+@mixin desktop-only {
+    @media screen and (min-width: 1025px) {
+        @content;
+    }
+}
+
+@mixin desktop--tablet-land {
+    @media screen and (min-width: 1025px),
+           screen and (max-width: 1024px) and (min-width: 768px) and (orientation: landscape) {
+        @content;
+    }
+}
+
+@mixin tablet-land {
+    @media screen and (min-height:600px) and (max-height: 1024px) and (min-width: 768px) and (max-width: 1279px) and (orientation: landscape) {
+        @content;
+    }
+}
+
+@mixin desktop--tablet {
+    @media screen and (min-width: 768px){
+        @content;
+    }
+}
+
+@mixin mid {
+	@media (max-width: #{$mid-width}) {
+   		@content;
+  	}
+}
+
+@mixin laptop {
+    @media (max-width: #{$laptop-width}) {
+        @content;
+    }
+}
+
+@mixin laptop-only {
+    @media (max-width: #{$laptop-width}) and (min-width: 1025px) {
+        @content;
+    }
+}
+
+@mixin heightMin {
+    @media screen and (max-height: 600px) and (min-width: 1025px){
+        @content;
+    }
+}
+
+@mixin land {
+    @media screen and (orientation: landscape){
+        @content;
+    }
+}
+
+@mixin port {
+    @media screen and (orientation: portrait){
+        @content;
+    }
+}
+
+@mixin desktop-wide {
+    @media screen and (min-width: 1920px) and (max-width: #{$desk-wide-width}) {
+        @content;
+    }
+}
+
+@mixin ultra-hd {
+    @media screen and (min-width: #{$desk-wide-width}) and (max-width: #{$ultra-hd-width}) {
+        @content;
+    }
+}
+
+// Socket
+@mixin socket {
+    position: relative;
+    width: 1500px;
+    height: 100%;
+    margin: auto;
+
+    @include mid {
+        width: 1220px;
+    }
+
+    @include laptop {
+        width: 1024px;
+    }
+
+    @media (max-width: 1024px) {
+        width: auto;
+        margin: 0 25px;
+    }
+
+    @include mobile {
+        margin: 0 17px;
+    }
+
+    // Nexus, iPhone X  (Landscape)
+    @media screen and (max-width: 960px) and (max-height: 600px){
+        margin: 0 17px;
+    }
+}
+
+// Web Kit Hack
+@mixin wk {
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		@content;
+	}	
+}
+
+// IE10>=
+@mixin ie10 {
+    @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+        @content;
+    }
+}
+
+// IE Edge
+@mixin edge {
+    @supports (-ms-ime-align: auto) {
+        @content;
+    }
+}
+
+// Rotate
+@mixin rot($deg) {
+    transform: rotate($deg); -webkit-transform: rotate($deg); -moz-transform:rotate($deg); -o-transform:rotate($deg);
+}
+
+// Clearfix
+@mixin clearfix {
+    &::after {
+        content: " ";
+        clear: both;
+        display: block;
+    }
+}
+
+// Background
+@mixin sp($x, $y){
+    background: url(../images/sprites.png) $x $y;
+}
+
+// Full
+@mixin full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+// Link Border
+@mixin link-bor($col, $colh) {
+    text-decoration: none;
+    border-bottom: 1px solid $col;
+    color: $col;
+
+    &:hover {
+        border-color: $colh;
+    }
+}
+
+// Vertiacl Align Midle
+@mixin mdl {
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+@mixin transform($val) {
+    transform: $val;
+    -ms-transform: $val;
+    -webkit-transform: $val;
+};
+
+@mixin ctrVert {
+    @include transform(translateY(-50%));
+    position: relative;
+    top: 50%;
+}
+
+@mixin ctrHor {
+    @include transform(translateX(-50%));
+    position: absolute;
+    left: 50%;
+}
+
+@mixin Center {
+    @include transform(translateX(-50%) translateY(-50%));
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+@mixin notCenterVert {
+    @include transform(translateY(0));
+    top: auto;
+}
+
+// Calc 
+@mixin calc($property, $expression) { 
+    #{$property}: -webkit-calc(#{$expression}); 
+    #{$property}: calc(#{$expression}); 
+} 
+
+// Border Radius 
+@mixin border-rad ($radius) {
+	-webkit-border-radius: $radius;
+	-moz-border-radius: $radius;
+	-ms-border-radius: $radius;
+    border-radius: $radius;
+}
+
+@mixin border-rad-top ($radius) {
+	-webkit-border-radius: $radius $radius 0 0;
+	-moz-border-radius: $radius $radius 0 0;
+	-ms-border-radius: $radius $radius 0 0;
+	border-radius: $radius $radius 0 0;
+}
+
+@mixin border-rad-btm ($radius) {
+	-webkit-border-radius: 0 0 $radius $radius;
+	-moz-border-radius: 0 0 $radius $radius;
+	-ms-border-radius: 0 0 $radius $radius;
+	border-radius: 0 0 $radius $radius;
+}
+
+@mixin border-rad-left ($radius) {
+	-webkit-border-radius: $radius 0 0 $radius;
+	-moz-border-radius: $radius 0 0 $radius;
+	-ms-border-radius: $radius 0 0 $radius;
+	border-radius:$radius 0 0 $radius;
+}
+
+@mixin border-rad-right ($radius) {
+	-webkit-border-radius: 0 $radius $radius 0;
+	-moz-border-radius: 0 $radius $radius 0;
+	-ms-border-radius: 0 $radius $radius 0;
+	border-radius:0 $radius $radius 0;
+}
+
+@mixin centeredAbsolute {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+// :after :before
+.ps {
+	content:"";
+	display: block;
+	position: absolute;
+	top: 0;
+}
+
+// Plaseholder
+@mixin ph {
+    &::-webkit-input-placeholder {@content}
+    &:-moz-placeholder           {@content}
+    &::-moz-placeholder          {@content}
+    &:-ms-input-placeholder      {@content}  
+}
+
+// Border Opacity
+@mixin border-btm-opa($rgba1, $rgba2, $rgba3, $opacity){
+	border-bottom: 1px solid rgba($rgba1, $rgba2, $rgba3, $opacity);
+	-webkit-background-clip: padding-box; 
+	background-clip: padding-box; 
+}
+
+// Transition 
+@mixin transition($transition-property, $transition-time, $method){
+    -webkit-transition: $transition-property $transition-time $method;
+    -ms-transition: $transition-property $transition-time $method;
+    transition: $transition-property $transition-time $method;
+}   
+
+@mixin transform($exp){
+    -webkit-transform: $exp;
+    -ms-transform: $exp;
+    transform: $exp;
+}  
+
+@mixin origin($h, $v) {
+    -ms-transform-origin: $h $v;
+    -webkit-transform-origin: $h $v;
+    transform-origin: $h $v;
+}
+
+// Delay
+@mixin delay($time) {
+    -webkit-transition-delay: $time;
+    -ms-transition-delay: $time;
+    transition-delay: $time;
+}
+
+@mixin a-delay($time){
+    -webkit-animation-delay: $time !important; 
+    -ms-animation-delay: $time !important; 
+    animation-delay: $time !important;
+}
+
+// Border Boxing
+@mixin border-box {
+	 -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+}
+
+// Arrows
+@mixin tr-top($bwr, $bwb, $bwl, $col) {
+    width: 0; height: 0; border-style: solid; border-width: 0 $bwr $bwb $bwl; border-color:  transparent transparent $col transparent;
+}
+
+@mixin tr-right($bwt, $bwb, $bwl, $col) {
+    width: 0; height: 0; border-style: solid; border-width:  $bwt 0 $bwb $bwl; border-color:   transparent transparent transparent $col;
+}
+
+@mixin tr-bottom($bwt, $bwr, $bwl, $col) {
+    width: 0; height: 0; border-style: solid; border-width: $bwt $bwr 0  $bwl; border-color: $col  transparent transparent transparent;
+}
+
+@mixin tr-left($bwt, $bwr, $bwb, $col) {
+    width: 0; height: 0; border-style: solid; border-width: $bwt $bwr $bwb 0; border-color: transparent $col   transparent transparent;
+}
+
+@mixin st($size, $color, $deg) {
+    position: absolute; display: block; width: $size; height: $size;  border-left-color: $color; pointer-events: none; border-right: 1px solid $color; border-top: 1px solid $color; 
+    -webkit-transform: rotate($deg); -moz-transform:rotate($deg); -o-transform:rotate($deg); transform: rotate($deg); 
+}
+
+// Scale
+@mixin scale($scale){
+    -ms-transform: scale($scale);
+    -webkit-transform: scale($scale);
+    transform: scale($scale);
+}
+
+// Flexbox
+@mixin display-flex {
+    display: flex;
+    display: -webkit-flexbox;
+    display: -ms-flexbox;
+}
+
+@mixin flex($val) {
+    @include display-flex;
+    -webkit-justify-content: $val;
+    justify-content: $val;
+}
+
+@mixin flex-vert($val) {
+    @include display-flex;
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+
+    -webkit-justify-content: $val;
+    justify-content: $val;
+}
+
+@mixin flex-tbl {
+    @include display-flex;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+
+    > div, > li {
+        flex-grow: 1;
+        flex-basis: 0;
+    }
+}
+
+// Transform Bugs
+.not-blurry {
+    -webkit-transform: translateZ(0) scale(1.0, 1.0);
+    -webkit-font-smoothing: subpixel-antialiased;
+}
+
+.sm {
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    -moz-perspective: 1000;
+    perspective: 1000;
+}
+
+// Animation
+@mixin animation($name, $duration, $func){
+    -ms-animation: $name $duration $func forwards;
+    -webkit-animation: $name $duration $func forwards;
+    animation: $name $duration $func forwards;
+}
+
+@mixin animation-d($name, $duration, $func, $delay){
+    -ms-animation: $name $duration $func $delay;
+    -webkit-animation: $name $duration $func $delay;
+    animation: $name $duration $func $delay;
+}
+
+// Center
+@mixin pos-center($width, $height){
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -$width/2;
+    margin-top: -$height/2;
+}
+
+// Table Cell
+@mixin tbl {
+    display: table;
+    width: 100%;
+    
+    .cell {
+        display: table-cell;
+        width: 100%;
+        height: 100%;
+        vertical-align: middle;
+    }
+}
+
+// Others
+@mixin no-select {
+    -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+}
+
+.no-select {
+    -webkit-touch-callout: none; -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none;
+}
+
+.circ {
+    @include border-rad(50%);
+}
+
+.ctr {
+    @include transform(translateX(-50%) translateY(-50%));
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+.ctrVert {
+    @include transform(translateY(-50%));
+    position: relative;
+    top: 50%;
+}
+
+.ctrHor {
+    @include transform(translateX(-50%));
+    position: relative;
+    left: 50%;
+}
+
+@mixin notCenter {
+    transform: translate(0);
+    -webkit-transform: translate(0);
+    -ms-transform: translate(0);
+    top: auto;
+}
+
+@mixin color-w($opacity){
+    color: rgba(255,255,255, $opacity);
+}
+
+@mixin color-b($opacity){
+    color: rgba(0,0,0, $opacity);
+}
+
+@keyframes fadeIn-l {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    5% {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@keyframes fadeOut-l {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    95% {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@-webkit-keyframes fadeIn-l {
+    0% {
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    1% {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 1;
+        visibility: visible;
+    }
+}
+
+@-webkit-keyframes fadeOut-l {
+    0% {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    99% {
+        opacity: 0;
+        visibility: visible;
+    }
+
+    100% {
+        opacity: 0;
+        visibility: hidden;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        display: none;
+    }
+
+    5% {
+        opacity: 0;
+        display: block;
+    }
+
+    100% {
+        opacity: 1;
+        display: block;
+    }
+}
+
+@keyframes fadeIn-o {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    95% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0;
+    }
+}
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+        display: none;
+    }
+
+    1% {
+        opacity: 0;
+        display: block;
+    }
+
+    100% {
+        opacity: 1;
+        display: block;
+    }
+}
+
+@-webkit-keyframes fadeOut {
+    0% {
+        opacity: 1;
+        display: block;
+    }
+
+    99% {
+        opacity: 0;
+        display: block;
+    }
+
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+@mixin addPageScrolling {
+    overflow-y: auto;
+
+    .page {
+        height: auto;
+    }
+
+    .page-layout {
+        height: auto;
+        min-height: 100%;
+    }
+}
+
+.nav-ttl-style {
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.ttl-style {
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25px;
+}
+
+.text-style {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 27px;
+    color: rgba(0,0,0,0.5);
+}
+
+.text-main-style {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.flex-vert-centered {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.ctrImg {
+    position: relative;
+    min-width: 100%;
+    min-height: 100%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
+}
+
+
+@keyframes caseIn {
+    0% {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.black-hover-bg {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: #000;
+    transform: translateY(102%);
+    transition: transform 0.3s $easing;
+}
+
+.container-grad {
+    position: relative;
+
+    &::before, &::after {
+        @extend .ps;
+        width: 100%;
+        left: 0;
+        height: 12px;
+        z-index: 1;
+    }
+
+    &::before {
+        top: 0;
+        background: linear-gradient(0deg, rgba(229,231,236,0) 0%, rgba(229,231,236,1) 100%);
+    }
+
+    &::after {
+        top: auto;
+        bottom: 0;
+        background: linear-gradient(180deg, rgba(229,231,236,0) 0%, rgba(229,231,236,1) 100%);
+    }
+}
+
+@mixin container-grad {
+    @extend .container-grad;
+}
+
+@mixin roadmapItemPseudoElms(){
+    &::before {
+        content: '';
+        width: 1px;
+        background: #c7c7c7;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+
+    &::after {
+        content: '';
+        width: 5px;
+        height: 5px;
+        background: $red;
+        border-radius: 50%;
+        position: absolute;
+        left: -2px;
+        bottom: -14px;
+    }
+}

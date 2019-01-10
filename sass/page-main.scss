@@ -1,0 +1,59 @@
+
+.page.main {
+    min-height: 480px;
+
+    .page-content {
+        min-height: 480px;
+    }
+
+    .content {
+        text-align: center;
+        padding-top: 400px;
+        min-height: 480px;
+    }
+
+    // specific rule to fit that text on screen three
+    @media screen and (max-width: 1280px) {
+
+    }
+
+    // Tablets only
+    @include tablet-only {
+
+    }
+
+
+    // Tablet Nexus 7 landscape
+    @media screen and (max-width: 961px) and (min-width: 960px) and (orientation: landscape) {
+  
+    }
+
+    // Tablets only portrait
+    @media screen and (max-width: 1024px) and (min-width: 600px) and (orientation: portrait) {
+       
+    }
+
+    // Tablets and phones portrait
+    @media screen and (max-width: 1024px) and (orientation: portrait) {
+       
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 960px) and (orientation: portrait) {
+
+    }
+
+    @include mobile {
+
+    }
+
+    // Phones
+    @media screen and (max-width: 600px), 
+           screen and (max-width: 600px) and (orientation: portrait) {
+
+    }
+
+    // Phones Landscape
+    @media screen and (max-width: 815px) and (orientation: landscape) {
+
+    }
+}

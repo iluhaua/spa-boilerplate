@@ -1,0 +1,26 @@
+.page.contacts {
+
+    .content {
+        text-align: center;
+        padding-top: 400px;
+        min-height: 480px;
+    }
+
+
+    // Phones
+    @media screen and (max-width: 600px) and (orientation: portrait),
+           screen and (max-width: 800px) and (orientation: landscape) {
+
+        
+    }
+
+    // Tablets only portrait
+    @media screen and (max-width: 1024px) and (min-width: 600px) and (orientation: portrait) {
+       
+    }
+
+    // Tablets and phones portrait
+    @media screen and (max-width: 1024px) and (orientation: portrait) {
+       
+    }
+}

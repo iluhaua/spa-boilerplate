@@ -1,0 +1,132 @@
+
+.input-control {
+    width: 280px;
+    position: relative;
+
+    &::before, &::after {
+        content: '';
+        position: absolute;
+        height: 3px;
+        width: 0px;
+        bottom: 0;
+        left: 0;
+    }
+
+    &::before {
+        background-color: #232323;
+        animation: borderReveal 1.4s forwards;
+    }
+
+    &::after {
+        background-color: $red;
+    }
+
+    &.focus {
+        label {
+            transform: translateY(-25px);
+        }
+
+        &::after {
+            animation: borderReveal 0.8s forwards;
+        }
+    }
+}
+
+input[type="text"], input[type="email"] {
+    background-color: transparent;
+    border: none;
+    width: 100%;
+    line-height: 25px;
+    vertical-align: bottom;
+    font-size: 13px;
+}
+
+input[type="submit"], input[type="button"] {
+    border: none;
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #c21819;
+    color: #d5d7d7;
+}
+
+label {
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 25px;
+    color: #232323;
+    position: absolute;
+    display: block;
+    top: -23px;
+}
+
+/* ---------------
+    Checkbox
+    -------------- */
+
+
+/* ---------------
+    Checkbox
+    -------------- */
+
+
+
+/* ---------------
+    Selects
+    -------------- */
+  
+
+/* ---------------
+    Popups
+    -------------- */
+
+.popup-wrapper {
+    @include full;
+    position: fixed;
+    z-index: 9999;
+
+    &::after {
+        @include full;
+        @extend .ps;
+        background: #000;
+        opacity: 0.77;
+    }
+
+    @include mobile {
+        position: absolute;
+    }
+}
+
+.popup {
+    text-align: center;
+    position: absolute;
+    z-index: 99999;
+    width: 500px;
+    left: 50%;
+    top: 50%;
+    margin-left:-250px;
+    background: #fff;
+    padding: 27px 0 42px;
+
+    @include mobile {
+        margin-top: 0 !important;
+        top: 50px;
+    }
+
+    .close {
+        display: block;
+        position: absolute;
+        cursor: pointer;
+        top: 16px;
+        right: 16px;
+        width: 18px;
+        height: 18px;
+        background: url("../images/sprites.png") repeat -13px -155px;
+
+        &:hover {
+            background: url("../images/sprites.png") repeat -13px -155px;
+        }
+    }
+}       
+

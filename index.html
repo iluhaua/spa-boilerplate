@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html lang="en" class="no-js">
+    @@include('./partials/head.htm',{"title": "SPA boilerplate", "styles": "css/main.css"})
+    @@include('./partials/scripts.htm')
+<body>
+    @@include('./partials/preloader.htm')
+
+    <div class="nav-container">
+        <div class="nav-section logo">
+            <a href="#main"><img src="images/Logo.svg" alt="Logo"></a>
+        </div>
+        <div class="nav-section menu-social">
+            <div class="nav-item menu">
+                @@include('./partials/menu.htm', {
+                    "items": [
+                    {"url": "#contacts", "title": "Contacts", "class": "menu-item"}
+                    ]
+                })
+            </div>
+            <div class="nav-item social">
+                
+            </div>
+            <div class="nav-item policy">
+                <a href="#">Privacy Policy</a>
+            </div>
+        </div>
+        <div class="nav-section menu-btn">
+            <div class="menu-switcher">
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-container">
+
+    </div>
+
+    @@include('./partials/main.htm')
+    @@include('./partials/contacts.htm')
+
+    <script>
+        SystemJS.import('./js/app.js');
+    </script>
+</body>
+</html>

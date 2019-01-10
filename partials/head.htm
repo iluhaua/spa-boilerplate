@@ -1,0 +1,84 @@
+<head>
+    <meta charset="utf-8" />
+    <title>@@title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="format-detection" content="address=no">
+
+    <!-- favicons -->
+    <!-- favicons end -->
+
+    <!-- <link rel="serviceworker" href="/vendor/sw.js"> -->
+    <!-- <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js', {scope: '/'})
+            .then(function(reg) {
+                // registration worked
+                console.log('Registration succeeded. Scope is ' + reg.scope);
+            }).catch(function(error) {
+                // registration failed
+                console.log('Registration failed with ' + error);
+            });
+        }
+    </script> -->
+    <script> // additional events
+        // fires when css loaded
+        var cssLoadedEvent = document.createEvent('Event');
+        cssLoadedEvent.initEvent('cssloaded', true, true);
+
+        //fire when first visible content loaded
+        var firstContentLoaded = document.createEvent('Event');
+        firstContentLoaded.initEvent('visibleloaded', true, true);
+
+        var criticalResourcesLoaded = document.createEvent('Event');
+        criticalResourcesLoaded.initEvent('criticalloaded', true, true);
+
+        // Create the event
+        var preloaderFinishedEvent = document.createEvent('Event');
+        preloaderFinishedEvent.initEvent('preloaderfinished', true, true);
+        
+        function styleLoaded() {
+            console.info('== CSS styles loaded ==');
+            document.cssloaded = true;
+            document.dispatchEvent(cssLoadedEvent);
+        }
+
+        document.addEventListener('cssloaded', visibleContentLoaded);
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            console.info('== DOM loaded ==');
+            document.domloaded = true;
+            visibleContentLoaded();
+        });
+
+        document.addEventListener('criticalloaded', function(event){
+            console.info('== critical resources loaded ==');
+            document.criticalloaded = true;
+            visibleContentLoaded();
+        });
+
+        //events proxy
+        function visibleContentLoaded(){
+            if(document.cssloaded && document.domloaded && document.criticalloaded) {
+                console.info('== Visible resources loaded ==');
+                document.dispatchEvent(firstContentLoaded);
+            }
+        }
+    </script>
+    <style>
+        @-webkit-keyframes fadeLoaderOut{0%{opacity:1}100%{opacity:0}}@keyframes fadeLoaderOut{0%{opacity:1}100%{opacity:0}}@-webkit-keyframes fadeLoaderIn{0%{opacity:0}100%{opacity:1}}@keyframes fadeLoaderIn{0%{opacity:0}100%{opacity:1}}@-webkit-keyframes zoomInLoaderText{0%{opacity:0;transform:scale(1.6)}1%{opacity:1;transform:scale(1.6)}90%{opacity:1;transform:scale(1)}100%,99%{opacity:0;transform:scale(1)}}@keyframes zoomInLoaderText{0%{opacity:0;transform:scale(1.6)}1%{opacity:1;transform:scale(1.6)}90%{opacity:1;transform:scale(1)}100%,99%{opacity:0;transform:scale(1)}}#loader{position:fixed;left:0;top:0;right:0;bottom:0;background:#e7e5e7;z-index:100500}#loader .text-wrap{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:fadeLoaderIn 1.4s linear forwards}#loader .text{font-size:24px;font-weight:500;color:#000;white-space:nowrap;opacity:0;transform:scale(1.6);animation:zoomInLoaderText 1.2s linear .25s;-webkit-backface-visibility:hidden;-moz-backface-visibility:hidden;backface-visibility:hidden}#loader.finished{animation:.8s fadeLoaderOut linear forwards}.finished.up{visibility:hidden;display:none}
+    </style>
+    <script>
+        // cache an image
+        var image = new Image();
+        image.src = 'images/preloader.gif';
+    </script>
+    
+    <!-- <link type="text/css" rel="stylesheet" href="css/main.css" /> -->
+    <!-- async css loading -->
+    <link rel="stylesheet" href="@@styles" media="none" onload="if(media!='all')media='all';styleLoaded();"><noscript><link rel="stylesheet" href="css/main.css"></noscript>
+    
+    
+    
+</head>
