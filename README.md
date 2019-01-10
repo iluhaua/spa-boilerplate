@@ -1,6 +1,6 @@
 # Single-page application boilerplate
 
-git clone 
+git clone git@github.com:iluhaua/spa-boilerplate.git (ssh should be configured)
 
 cd spa-boilerplate
 
